@@ -1,0 +1,43 @@
+<Window x:Class="TomatoTimerPro.Views.Dialogs.SketchDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sketch="clr-namespace:TomatoTimerPro.Views.Components.Sketch"
+        Title="{Binding Title}" Icon="{StaticResource AppIcon}" Width="480" SizeToContent="Height" MinHeight="220" MaxHeight="640"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        FontFamily="KaiTi, Segoe Print, Microsoft YaHei UI" Foreground="#39342F">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="DialogBooleanVisibility" />
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CancelCommand}" />
+    </Window.InputBindings>
+    <sketch:SketchBorder Margin="9" Background="#FAF5E9" BorderBrush="#4C443A"
+                         BorderThickness="1.7" CornerRadius="19" Padding="26,22,26,24" sketch:SketchMotion.Enter="True">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid MouseLeftButtonDown="OnHeaderMouseLeftButtonDown" Background="Transparent" Margin="0,0,0,11">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="23" FontWeight="SemiBold" Margin="0,0,12,0" />
+                </StackPanel>
+            </Grid>
+            <Path Grid.Row="1" Stroke="#BBA585" StrokeThickness="1.1" Opacity=".7" Stretch="Fill" Height="4"
+                  Data="M 0,2 C 50,0 110,4 170,2 C 230,1 310,4 390,1" Margin="0,0,0,16" />
+            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="330" Margin="0,0,0,25">
+                <TextBlock Text="{Binding Message}" TextWrapping="Wrap" FontSize="15" LineHeight="25" Padding="1,0,8,0" />
+            </ScrollViewer>
+            <WrapPanel Grid.Row="3" HorizontalAlignment="Right">
+                <Button Content="{Binding CancelText}" Command="{Binding CancelCommand}" Style="{StaticResource SoftButton}"
+                        Visibility="{Binding HasCancel, Converter={StaticResource DialogBooleanVisibility}}" Margin="0,0,8,0" MinWidth="78" />
+                <Button Content="{Binding SecondaryText}" Command="{Binding SecondaryCommand}" Style="{StaticResource SoftButton}"
+                        Visibility="{Binding HasSecondary, Converter={StaticResource DialogBooleanVisibility}}" Margin="0,0,8,0" MinWidth="78" />
+                <Button Content="{Binding PrimaryText}" Command="{Binding PrimaryCommand}" Style="{StaticResource PrimaryButton}" MinWidth="88" IsDefault="True" />
+            </WrapPanel>
+        </Grid>
+    </sketch:SketchBorder>
+</Window>

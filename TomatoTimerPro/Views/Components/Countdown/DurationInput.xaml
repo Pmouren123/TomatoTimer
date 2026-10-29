@@ -1,0 +1,19 @@
+<UserControl x:Class="TomatoTimerPro.Views.Components.Countdown.DurationInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="8" /><ColumnDefinition Width="*" /><ColumnDefinition Width="8" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBlock Text="小时" FontSize="13" Foreground="{StaticResource MutedBrush}" Margin="0,0,0,6" />
+            <TextBox Text="{Binding Hours, UpdateSourceTrigger=PropertyChanged}" MaxLength="2" Padding="6,9" HorizontalContentAlignment="Center" ToolTip="小时，0 至 24" AutomationProperties.Name="专注小时" />
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <TextBlock Text="分钟" FontSize="13" Foreground="{StaticResource MutedBrush}" Margin="0,0,0,6" />
+            <TextBox Text="{Binding Minutes, UpdateSourceTrigger=PropertyChanged}" MaxLength="2" Padding="6,9" HorizontalContentAlignment="Center" ToolTip="分钟，0 至 59" AutomationProperties.Name="专注分钟" />
+        </StackPanel>
+        <StackPanel Grid.Column="4">
+            <TextBlock Text="秒" FontSize="13" Foreground="{StaticResource MutedBrush}" Margin="0,0,0,6" />
+            <TextBox Text="{Binding Seconds, UpdateSourceTrigger=PropertyChanged}" MaxLength="10" Padding="6,9" HorizontalContentAlignment="Center" ToolTip="秒，0 至不足 60，也可填写小数" AutomationProperties.Name="专注秒" />
+        </StackPanel>
+    </Grid>
+</UserControl>

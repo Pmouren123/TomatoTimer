@@ -1,0 +1,112 @@
+<UserControl x:Class="TomatoTimerPro.Views.Pages.Settings.SettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:countdown="clr-namespace:TomatoTimerPro.Views.Components.Countdown"
+             xmlns:sketch="clr-namespace:TomatoTimerPro.Views.Components.Sketch">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="30,30,30,24">
+            <TextBlock Text="偏好设置" Style="{StaticResource PageTitle}" Margin="0,0,0,22" />
+            <sketch:SketchBorder Style="{StaticResource Card}" Margin="0,0,0,17">
+                <StackPanel>
+                    <TextBlock Text="默认专注时长" Style="{StaticResource SectionTitle}" />
+                    <countdown:DurationInput DataContext="{Binding DefaultDuration}" MaxWidth="350" HorizontalAlignment="Left" MinWidth="270" />
+                    <TextBlock Text="可组合填写小时、分钟和秒，最长 24 小时。" Style="{StaticResource Caption}" Margin="0,12,0,12" />
+                    <Button Content="应用默认时长" Command="{Binding ApplyDefaultDurationCommand}" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding DurationStatus}" Style="{StaticResource InlineStatus}" />
+                </StackPanel>
+            </sketch:SketchBorder>
+            <sketch:SketchBorder Style="{StaticResource Card}" Margin="0,0,0,17">
+                <StackPanel>
+                    <TextBlock Text="交互动画" Style="{StaticResource SectionTitle}" />
+                    <TextBlock Text="调整页签平移、页面刷新和连续点击保护的节奏。" Style="{StaticResource Caption}" Margin="0,0,0,16" />
+                    <Grid Margin="0,0,0,13">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="150" /><ColumnDefinition Width="*" /><ColumnDefinition Width="52" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="页面刷新" VerticalAlignment="Center" />
+                        <Slider Grid.Column="1" Minimum="160" Maximum="1000" TickFrequency="20" IsSnapToTickEnabled="True" Value="{Binding PageTransitionMilliseconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="2" Text="{Binding PageTransitionMilliseconds, StringFormat={}{0} ms}" FontSize="13" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid Margin="0,0,0,13">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="150" /><ColumnDefinition Width="*" /><ColumnDefinition Width="52" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="页签平移" VerticalAlignment="Center" />
+                        <Slider Grid.Column="1" Minimum="160" Maximum="1000" TickFrequency="20" IsSnapToTickEnabled="True" Value="{Binding SelectionSlideMilliseconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="2" Text="{Binding SelectionSlideMilliseconds, StringFormat={}{0} ms}" FontSize="13" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid Margin="0,0,0,13">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="150" /><ColumnDefinition Width="*" /><ColumnDefinition Width="52" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="底图淡入淡出" VerticalAlignment="Center" />
+                        <Slider Grid.Column="1" Minimum="100" Maximum="600" TickFrequency="20" IsSnapToTickEnabled="True" Value="{Binding SelectionFadeMilliseconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="2" Text="{Binding SelectionFadeMilliseconds, StringFormat={}{0} ms}" FontSize="13" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="150" /><ColumnDefinition Width="*" /><ColumnDefinition Width="52" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="重复点击保护" VerticalAlignment="Center" />
+                        <Slider Grid.Column="1" Minimum="180" Maximum="1200" TickFrequency="20" IsSnapToTickEnabled="True" Value="{Binding NavigationCooldownMilliseconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="2" Text="{Binding NavigationCooldownMilliseconds, StringFormat={}{0} ms}" FontSize="13" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                </StackPanel>
+            </sketch:SketchBorder>
+            <sketch:SketchBorder Style="{StaticResource Card}" Margin="0,0,0,17">
+                <StackPanel>
+                    <TextBlock Text="外观" Style="{StaticResource SectionTitle}" />
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="130" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="背景颜色" VerticalAlignment="Center" />
+                        <TextBox Grid.Column="1" Text="{Binding BackgroundColor, UpdateSourceTrigger=LostFocus}" ToolTip="输入颜色值，例如 #F6F5F2" MaxLength="9" MaxWidth="210" HorizontalAlignment="Left" MinWidth="145" />
+                        <Button Grid.Column="2" Content="恢复默认" Command="{Binding ResetBackgroundCommand}" Margin="10,0,0,0" />
+                    </Grid>
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="130" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="背景图片" VerticalAlignment="Center" />
+                        <sketch:SketchBorder Grid.Column="1" Background="#F5ECD8" CornerRadius="7" Padding="10" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding BackgroundImagePath, TargetNullValue=尚未选择图片}" FontSize="13" TextTrimming="CharacterEllipsis" ToolTip="{Binding BackgroundImagePath}" Foreground="{StaticResource MutedBrush}" />
+                        </sketch:SketchBorder>
+                        <Button Grid.Column="2" Content="选择图片" Command="{Binding ChooseBackgroundImageCommand}" Margin="10,0,0,0" />
+                    </Grid>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="130" /><ColumnDefinition Width="*" /><ColumnDefinition Width="40" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="图片不透明度" VerticalAlignment="Center" />
+                        <Slider Grid.Column="1" Value="{Binding BackgroundOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="1" AutoToolTipPlacement="None" />
+                        <TextBlock Grid.Column="2" Text="{Binding BackgroundOpacity, StringFormat={}{0:P0}}" FontSize="13" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    <CheckBox Content="显示悬浮时钟" IsChecked="{Binding FloatingClockEnabled, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </sketch:SketchBorder>
+            <sketch:SketchBorder Style="{StaticResource Card}" Margin="0,0,0,17">
+                <StackPanel>
+                    <TextBlock Text="托盘" Style="{StaticResource SectionTitle}" />
+                    <CheckBox Content="关闭窗口时保留在托盘" IsChecked="{Binding CloseToTray, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </sketch:SketchBorder>
+            <sketch:SketchBorder Style="{StaticResource Card}" Margin="0,0,0,17">
+                <StackPanel>
+                    <TextBlock Text="音乐与提醒" Style="{StaticResource SectionTitle}" />
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="130" /><ColumnDefinition Width="*" /><ColumnDefinition Width="40" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="音乐播放音量" VerticalAlignment="Center" />
+                        <Slider Grid.Column="1" Value="{Binding MusicVolume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="1" AutoToolTipPlacement="None" />
+                        <TextBlock Grid.Column="2" Text="{Binding MusicVolume, StringFormat={}{0:P0}}" FontSize="13" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="130" /><ColumnDefinition Width="*" /><ColumnDefinition Width="40" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="结束铃声音量" VerticalAlignment="Center" />
+                        <Slider Grid.Column="1" Value="{Binding AlarmVolume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="1" AutoToolTipPlacement="None" />
+                        <TextBlock Grid.Column="2" Text="{Binding AlarmVolume, StringFormat={}{0:P0}}" FontSize="13" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                    <CheckBox Content="铃声结束后恢复音乐" IsChecked="{Binding ResumeMusic, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </sketch:SketchBorder>
+            <sketch:SketchBorder Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="本地数据" Style="{StaticResource SectionTitle}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding DataDirectory}" FontSize="13" Foreground="{StaticResource MutedBrush}" TextTrimming="CharacterEllipsis" ToolTip="{Binding DataDirectory}" VerticalAlignment="Center" Margin="0,0,15,0" />
+                        <Button Grid.Column="1" Content="修改位置" Command="{Binding ChooseDataDirectoryCommand}" Margin="0,0,10,0" />
+                        <Button Grid.Column="2" Content="打开目录" Command="{Binding OpenDataDirectoryCommand}" />
+                    </Grid>
+                </StackPanel>
+            </sketch:SketchBorder>
+            <TextBlock Text="{Binding StatusMessage}" Style="{StaticResource InlineStatus}" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

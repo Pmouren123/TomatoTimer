@@ -1,0 +1,226 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sketch="clr-namespace:TomatoTimerPro.Views.Components.Sketch">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="SketchScrolling.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <SolidColorBrush x:Key="CanvasBrush" Color="#FAF5E9" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFCF4" />
+    <SolidColorBrush x:Key="InkBrush" Color="#433B34" />
+    <SolidColorBrush x:Key="MutedBrush" Color="#8F8373" />
+    <SolidColorBrush x:Key="LineBrush" Color="#C5B9A5" />
+    <SolidColorBrush x:Key="AccentBrush" Color="#D97962" />
+    <SolidColorBrush x:Key="AccentSoftBrush" Color="#F5D8C9" />
+    <SolidColorBrush x:Key="SidebarBrush" Color="#F2E8D4" />
+    <SolidColorBrush x:Key="SuccessBrush" Color="#71846C" />
+    <SolidColorBrush x:Key="MarkerBrush" Color="#F2DEA0" />
+    <FontFamily x:Key="HandwritingFont">KaiTi, Segoe Print, Microsoft YaHei UI</FontFamily>
+    <DrawingBrush x:Key="NotebookLines" TileMode="Tile" Viewport="0,0,30,30" ViewportUnits="Absolute" Viewbox="0,0,30,30" ViewboxUnits="Absolute" Stretch="None">
+        <DrawingBrush.Drawing><GeometryDrawing Geometry="M 0,29.5 L 30,29.5"><GeometryDrawing.Pen><Pen Brush="#0B8F8373" Thickness="0.6" /></GeometryDrawing.Pen></GeometryDrawing></DrawingBrush.Drawing>
+    </DrawingBrush>
+    <Style TargetType="TextBlock"><Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="15" /></Style>
+    <Style x:Key="PageTitle" TargetType="TextBlock"><Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="28" /><Setter Property="FontWeight" Value="Bold" /><Setter Property="Foreground" Value="{StaticResource InkBrush}" /><Setter Property="Margin" Value="0,0,0,22" /></Style>
+    <Style x:Key="PageDescription" TargetType="TextBlock"><Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="15" /><Setter Property="Foreground" Value="{StaticResource MutedBrush}" /><Setter Property="TextWrapping" Value="Wrap" /><Setter Property="LineHeight" Value="23" /></Style>
+    <Style x:Key="SectionTitle" TargetType="TextBlock"><Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="20" /><Setter Property="FontWeight" Value="Bold" /><Setter Property="Margin" Value="0,0,0,15" /></Style>
+    <Style x:Key="FieldLabel" TargetType="TextBlock"><Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="14" /><Setter Property="FontWeight" Value="Medium" /><Setter Property="Foreground" Value="#706353" /><Setter Property="Margin" Value="0,0,0,8" /></Style>
+    <Style x:Key="Caption" TargetType="TextBlock"><Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="14" /><Setter Property="Foreground" Value="{StaticResource MutedBrush}" /><Setter Property="TextWrapping" Value="Wrap" /><Setter Property="LineHeight" Value="22" /></Style>
+    <Style x:Key="InlineStatus" TargetType="TextBlock" BasedOn="{StaticResource Caption}">
+        <Setter Property="sketch:SketchMotion.Change" Value="{Binding Text, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Foreground" Value="#716B5E" />
+        <Setter Property="Margin" Value="0,12,0,0" />
+        <Style.Triggers>
+            <Trigger Property="Text" Value=""><Setter Property="Visibility" Value="Collapsed" /></Trigger>
+            <Trigger Property="Text" Value="{x:Null}"><Setter Property="Visibility" Value="Collapsed" /></Trigger>
+        </Style.Triggers>
+    </Style>
+    <DataTemplate x:Key="PlanListTemplate">
+        <sketch:SketchBorder x:Name="PlanPaper" Background="#FFFCF4" BorderBrush="#CEBFA1" BorderThickness="1" CornerRadius="8" Padding="12,13" Margin="1,2,1,12" sketch:SketchMotion.Change="{Binding SelectedStatus}">
+            <StackPanel>
+                <sketch:SketchBorder Background="#F4EAD5" BorderBrush="#D4C4A4" BorderThickness="0,0,0,0.8" CornerRadius="6" Padding="9,7" Margin="-2,-2,-2,10">
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="30" /></Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <sketch:SketchIcon Kind="calendar" Width="15" Height="15" Stroke="#9C815E" Margin="0,0,6,0" />
+                            <TextBlock Text="今日计划" FontSize="13" Foreground="#8C7657" />
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Text="手帐" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#8C7657" />
+                    </Grid>
+                </sketch:SketchBorder>
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="30" /></Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Ellipse x:Name="PlanPendingDot" Width="5" Height="5" Fill="#C57E68" Margin="0,0,6,0" Visibility="Collapsed" />
+                        <TextBlock x:Name="PlanTypeLabel" Text="待办笔记" FontSize="12" Foreground="#A08D6C" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="···" FontFamily="Segoe UI" FontWeight="Bold" FontSize="19" Width="28" Height="26" Padding="0" Background="Transparent" BorderThickness="0" ToolTip="更多操作" AutomationProperties.Name="计划更多操作" sketch:SketchMenu.OpenOnClick="True">
+                        <Button.ContextMenu>
+                            <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                                <MenuItem Header="编辑计划" Command="{Binding EditCommand}" />
+                                <MenuItem Header="删除计划…" Command="{Binding DeleteCommand}" Foreground="#AE634D" />
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                </Grid>
+                <Button Command="{Binding EditCommand}" Background="Transparent" BorderThickness="0" Padding="0" HorizontalContentAlignment="Stretch" ToolTip="编辑计划内容">
+                <TextBlock x:Name="PlanTitle" Text="{Binding Title}" TextWrapping="Wrap" FontSize="18" LineHeight="25">
+                    <TextBlock.Style><Style TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource InkBrush}" /><Style.Triggers><DataTrigger Binding="{Binding IsCompleted}" Value="True"><Setter Property="TextDecorations" Value="Strikethrough" /><Setter Property="Foreground" Value="{StaticResource SuccessBrush}" /></DataTrigger><DataTrigger Binding="{Binding IsOnHold}" Value="True"><Setter Property="Foreground" Value="#A38D6C" /></DataTrigger></Style.Triggers></Style></TextBlock.Style>
+                </TextBlock>
+                </Button>
+                <Grid Margin="0,13,0,0">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="106" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                    <ComboBox ItemsSource="{Binding StatusChoices}" SelectedItem="{Binding SelectedStatus}" DisplayMemberPath="Label" MinHeight="33" Padding="7,5" FontSize="14" Background="#F7F0DE" BorderBrush="#D4C6AB" AutomationProperties.Name="计划状态" />
+                    <TextBlock x:Name="PlanDurationText" Grid.Column="1" Text="{Binding DurationText}" FontSize="13" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="7,0,0,0" Visibility="Collapsed" />
+                </Grid>
+                <Button x:Name="PlanStartButton" Command="{Binding StartFocusCommand}" Padding="8,8" Margin="0,12,0,0" Background="#E1E7D5" BorderBrush="#A4B08D" BorderThickness="0.9" FontSize="14" Visibility="Collapsed" AutomationProperties.Name="从日程开始专注">
+                    <StackPanel Orientation="Horizontal"><sketch:SketchIcon Kind="play" Width="15" Height="15" Stroke="#647655" Margin="0,0,7,0" /><TextBlock Text="开始专注" Foreground="#647655" FontSize="14" /></StackPanel>
+                </Button>
+                <WrapPanel>
+                    <Button x:Name="PlanRestoreButton" Content="加入今日日程" Command="{Binding RestoreCommand}" Padding="8,7" Margin="0,10,7,0" FontSize="14" Background="#E9DFC8" BorderBrush="#BCAA8A" BorderThickness="0.8" Visibility="Collapsed" />
+                    <Button x:Name="PlanLeisureButton" Content="休闲执行" Command="{Binding RunLeisureCommand}" Padding="8,7" Margin="0,10,0,0" FontSize="14" Background="#DFE6D4" BorderBrush="#A9B398" BorderThickness="0.8" Visibility="Collapsed" />
+                </WrapPanel>
+            </StackPanel>
+        </sketch:SketchBorder>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding HasPomodoro}" Value="True"><Setter TargetName="PlanDurationText" Property="Visibility" Value="Visible" /><Setter TargetName="PlanTypeLabel" Property="Text" Value="番茄计划" /></DataTrigger>
+            <DataTrigger Binding="{Binding IsCompleted}" Value="True"><Setter TargetName="PlanPaper" Property="Background" Value="#F3F4E9" /></DataTrigger>
+            <DataTrigger Binding="{Binding IsPending}" Value="True"><Setter TargetName="PlanPendingDot" Property="Visibility" Value="Visible" /></DataTrigger>
+            <MultiDataTrigger><MultiDataTrigger.Conditions><Condition Binding="{Binding HasPomodoro}" Value="True" /><Condition Binding="{Binding IsPending}" Value="True" /></MultiDataTrigger.Conditions><Setter TargetName="PlanStartButton" Property="Visibility" Value="Visible" /></MultiDataTrigger>
+            <DataTrigger Binding="{Binding IsOnHold}" Value="True"><Setter TargetName="PlanRestoreButton" Property="Visibility" Value="Visible" /></DataTrigger>
+            <DataTrigger Binding="{Binding IsAbandoned}" Value="True"><Setter TargetName="PlanRestoreButton" Property="Visibility" Value="Visible" /><Setter TargetName="PlanRestoreButton" Property="Content" Value="恢复" /></DataTrigger>
+            <MultiDataTrigger><MultiDataTrigger.Conditions><Condition Binding="{Binding IsOnHold}" Value="True" /><Condition Binding="{Binding HasPomodoro}" Value="True" /></MultiDataTrigger.Conditions><Setter TargetName="PlanLeisureButton" Property="Visibility" Value="Visible" /></MultiDataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+    <Style x:Key="Card" TargetType="Border"><Setter Property="sketch:SketchMotion.Enter" Value="True" /><Setter Property="Background" Value="{StaticResource SurfaceBrush}" /><Setter Property="BorderBrush" Value="#B7A88F" /><Setter Property="BorderThickness" Value="1" /><Setter Property="CornerRadius" Value="11" /><Setter Property="Padding" Value="24" /></Style>
+    <Style TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="15" /><Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Foreground" Value="{StaticResource InkBrush}" /><Setter Property="Background" Value="#FFFCF4" /><Setter Property="BorderBrush" Value="{StaticResource InkBrush}" /><Setter Property="BorderThickness" Value="1.1" />
+        <Setter Property="Padding" Value="16,9" /><Setter Property="Cursor" Value="Hand" /><Setter Property="HorizontalContentAlignment" Value="Center" /><Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+            <sketch:SketchBorder x:Name="Chrome" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="7" Padding="{TemplateBinding Padding}" RenderTransformOrigin="0.5,0.5">
+                <sketch:SketchBorder.RenderTransform><TransformGroup><ScaleTransform x:Name="ButtonScale" /><TranslateTransform x:Name="ButtonLift" /></TransformGroup></sketch:SketchBorder.RenderTransform>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualStateGroup.Transitions>
+                            <VisualTransition GeneratedDuration="0:0:0.24"><VisualTransition.GeneratedEasingFunction><CubicEase EasingMode="EaseOut" /></VisualTransition.GeneratedEasingFunction></VisualTransition>
+                            <VisualTransition To="Pressed" GeneratedDuration="0:0:0.10"><VisualTransition.GeneratedEasingFunction><QuadraticEase EasingMode="EaseOut" /></VisualTransition.GeneratedEasingFunction></VisualTransition>
+                            <VisualTransition From="Pressed" To="MouseOver" GeneratedDuration="0:0:0.34"><VisualTransition.GeneratedEasingFunction><BackEase EasingMode="EaseOut" Amplitude="0.65" /></VisualTransition.GeneratedEasingFunction></VisualTransition>
+                        </VisualStateGroup.Transitions>
+                        <VisualState x:Name="Normal"><Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleX" To="1" Duration="0" /><DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleY" To="1" Duration="0" /><DoubleAnimation Storyboard.TargetName="ButtonLift" Storyboard.TargetProperty="Y" To="0" Duration="0" /><DoubleAnimation Storyboard.TargetName="Chrome" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                        </Storyboard></VisualState>
+                        <VisualState x:Name="MouseOver"><Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleX" To="1.035" Duration="0" /><DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleY" To="1.035" Duration="0" /><DoubleAnimation Storyboard.TargetName="ButtonLift" Storyboard.TargetProperty="Y" To="-2.5" Duration="0" /><DoubleAnimation Storyboard.TargetName="Chrome" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                        </Storyboard></VisualState>
+                        <VisualState x:Name="Pressed"><Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleX" To="0.94" Duration="0" /><DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleY" To="0.94" Duration="0" /><DoubleAnimation Storyboard.TargetName="ButtonLift" Storyboard.TargetProperty="Y" To="1.5" Duration="0" /><DoubleAnimation Storyboard.TargetName="Chrome" Storyboard.TargetProperty="Opacity" To="0.8" Duration="0" />
+                        </Storyboard></VisualState>
+                        <VisualState x:Name="Disabled"><Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleX" To="1" Duration="0" /><DoubleAnimation Storyboard.TargetName="ButtonScale" Storyboard.TargetProperty="ScaleY" To="1" Duration="0" /><DoubleAnimation Storyboard.TargetName="ButtonLift" Storyboard.TargetProperty="Y" To="0" Duration="0" /><DoubleAnimation Storyboard.TargetName="Chrome" Storyboard.TargetProperty="Opacity" To="0.38" Duration="0" />
+                        </Storyboard></VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
+            </sketch:SketchBorder>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Chrome" Property="BorderBrush" Value="{StaticResource AccentBrush}" /></Trigger>
+                <Trigger Property="IsEnabled" Value="False"><Setter Property="Cursor" Value="Arrow" /></Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"><Setter Property="Background" Value="{StaticResource AccentBrush}" /><Setter Property="BorderBrush" Value="{StaticResource InkBrush}" /><Setter Property="Foreground" Value="#332E28" /></Style>
+    <Style x:Key="SoftButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"><Setter Property="Background" Value="#F3E9CF" /></Style>
+    <Style x:Key="TextButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"><Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" /><Setter Property="Foreground" Value="#65705C" /><Setter Property="Padding" Value="8,7" /></Style>
+    <Style x:Key="NavButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"><Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" /><Setter Property="Foreground" Value="#786A58" /><Setter Property="Padding" Value="15,14" /><Setter Property="Margin" Value="0,0,0,10" /><Setter Property="HorizontalContentAlignment" Value="Left" /></Style>
+    <Style TargetType="TextBox">
+        <Setter Property="sketch:SketchMotion.Feedback" Value="True" />
+        <Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="17" /><Setter Property="Foreground" Value="{StaticResource InkBrush}" /><Setter Property="Background" Value="#FCF8EB" /><Setter Property="BorderBrush" Value="#B0A28D" /><Setter Property="BorderThickness" Value="1" /><Setter Property="Padding" Value="12,10" /><Setter Property="VerticalContentAlignment" Value="Center" /><Setter Property="SelectionBrush" Value="#E8BC92" />
+        <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TextBox">
+            <sketch:SketchBorder x:Name="Chrome" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" Padding="{TemplateBinding Padding}"><ScrollViewer x:Name="PART_ContentHost" /></sketch:SketchBorder>
+            <ControlTemplate.Triggers><Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter TargetName="Chrome" Property="BorderBrush" Value="{StaticResource AccentBrush}" /><Setter TargetName="Chrome" Property="Background" Value="#FFFDF5" /></Trigger><Trigger Property="IsEnabled" Value="False"><Setter TargetName="Chrome" Property="Opacity" Value="0.45" /></Trigger></ControlTemplate.Triggers>
+        </ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style TargetType="ComboBox">
+        <Setter Property="sketch:SketchMotion.Feedback" Value="True" />
+        <Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="15" /><Setter Property="Foreground" Value="{StaticResource InkBrush}" /><Setter Property="Background" Value="#FCF8EB" /><Setter Property="BorderBrush" Value="#B0A28D" /><Setter Property="BorderThickness" Value="1" /><Setter Property="Padding" Value="10,8" /><Setter Property="MinHeight" Value="40" /><Setter Property="HorizontalContentAlignment" Value="Stretch" /><Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ComboBox">
+            <Grid x:Name="PART_Root">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="28" /></Grid.ColumnDefinitions>
+                <ToggleButton Grid.ColumnSpan="2" Focusable="False" ClickMode="Press" IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                    <ToggleButton.Template><ControlTemplate TargetType="ToggleButton">
+                        <sketch:SketchBorder x:Name="Chrome" Background="{Binding Background, RelativeSource={RelativeSource AncestorType=ComboBox}}" BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource AncestorType=ComboBox}}" BorderThickness="1" CornerRadius="5">
+                            <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="28" /></Grid.ColumnDefinitions>
+                                <Path Grid.Column="1" x:Name="Arrow" Data="M 0,0 L 4,4 9,0" Width="9" Height="5" Stroke="#746653" StrokeThickness="1.4" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin=".5,.5">
+                                    <Path.RenderTransform><RotateTransform Angle="0" /></Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                        </sketch:SketchBorder>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Chrome" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                                <Trigger.EnterActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Arrow" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" To="180" Duration="0:0:0.18"><DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut" /></DoubleAnimation.EasingFunction></DoubleAnimation></Storyboard></BeginStoryboard></Trigger.EnterActions>
+                                <Trigger.ExitActions><BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="Arrow" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0.18"><DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut" /></DoubleAnimation.EasingFunction></DoubleAnimation></Storyboard></BeginStoryboard></Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Chrome" Property="BorderBrush" Value="#978467" /></Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate></ToggleButton.Template>
+                </ToggleButton>
+                <ContentPresenter x:Name="SelectionContent" Grid.Column="0" Margin="{TemplateBinding Padding}" IsHitTestVisible="False"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" />
+                <Popup x:Name="PART_Popup" Grid.ColumnSpan="2" Placement="Bottom" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" VerticalOffset="4" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
+                    <sketch:SketchBorder Background="#FFFCF4" BorderBrush="{StaticResource InkBrush}" BorderThickness="1" CornerRadius="6" Padding="5" sketch:SketchMotion.Enter="True"
+                                         MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                        <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                        </ScrollViewer>
+                    </sketch:SketchBorder>
+                </Popup>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" /></Trigger>
+                <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.4" /></Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="sketch:SketchMotion.Feedback" Value="True" />
+        <Setter Property="Padding" Value="10,8" /><Setter Property="MinHeight" Value="36" /><Setter Property="HorizontalContentAlignment" Value="Stretch" /><Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ComboBoxItem">
+            <Border x:Name="Item" Background="Transparent" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" /></Border>
+            <ControlTemplate.Triggers><Trigger Property="IsHighlighted" Value="True"><Setter TargetName="Item" Property="Background" Value="{StaticResource MarkerBrush}" /></Trigger><Trigger Property="IsSelected" Value="True"><Setter TargetName="Item" Property="Background" Value="{StaticResource AccentSoftBrush}" /></Trigger></ControlTemplate.Triggers>
+        </ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style TargetType="DatePickerTextBox" BasedOn="{StaticResource {x:Type TextBox}}"><Setter Property="Padding" Value="6,5" /><Setter Property="BorderThickness" Value="0" /><Setter Property="Background" Value="Transparent" /><Setter Property="FontSize" Value="15" /></Style>
+    <Style x:Key="SketchCalendarDay" TargetType="CalendarDayButton" BasedOn="{StaticResource {x:Type Button}}"><Setter Property="Padding" Value="4" /><Setter Property="Margin" Value="1" /><Setter Property="MinWidth" Value="27" /><Setter Property="MinHeight" Value="26" /><Setter Property="FontSize" Value="14" /><Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" /><Style.Triggers><Trigger Property="IsInactive" Value="True"><Setter Property="Foreground" Value="#B8AB93" /></Trigger><Trigger Property="IsToday" Value="True"><Setter Property="BorderThickness" Value="1" /><Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" /></Trigger><Trigger Property="IsSelected" Value="True"><Setter Property="Background" Value="{StaticResource MarkerBrush}" /><Setter Property="BorderThickness" Value="1" /></Trigger></Style.Triggers></Style>
+    <Style x:Key="SketchCalendarMonth" TargetType="CalendarButton" BasedOn="{StaticResource {x:Type Button}}"><Setter Property="Padding" Value="5" /><Setter Property="Margin" Value="1" /><Setter Property="FontSize" Value="14" /><Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" /><Style.Triggers><Trigger Property="HasSelectedDays" Value="True"><Setter Property="Background" Value="{StaticResource MarkerBrush}" /><Setter Property="BorderThickness" Value="1" /></Trigger></Style.Triggers></Style>
+    <Style TargetType="Calendar"><Setter Property="Background" Value="#FFFCF4" /><Setter Property="Foreground" Value="{StaticResource InkBrush}" /><Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="14" /><Setter Property="CalendarDayButtonStyle" Value="{StaticResource SketchCalendarDay}" /><Setter Property="CalendarButtonStyle" Value="{StaticResource SketchCalendarMonth}" /><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Calendar"><sketch:SketchBorder Background="{TemplateBinding Background}" BorderBrush="{StaticResource InkBrush}" BorderThickness="1.1" CornerRadius="9" Padding="8"><CalendarItem x:Name="PART_CalendarItem" Background="{TemplateBinding Background}" BorderThickness="0" /></sketch:SketchBorder></ControlTemplate></Setter.Value></Setter></Style>
+    <Style TargetType="DatePicker"><Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="15" /><Setter Property="Background" Value="#FFFCF4" /><Setter Property="BorderBrush" Value="#B0A28D" /><Setter Property="Padding" Value="3" /><Setter Property="MinHeight" Value="38" /><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="DatePicker"><Grid x:Name="PART_Root"><sketch:SketchBorder Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="5" Padding="{TemplateBinding Padding}"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="27" /></Grid.ColumnDefinitions><DatePickerTextBox x:Name="PART_TextBox" VerticalAlignment="Center" /><Button x:Name="PART_Button" Grid.Column="1" Focusable="False" Padding="3" Background="Transparent" BorderThickness="0"><sketch:SketchIcon Kind="notes" Width="18" Height="18" Stroke="#927B5A" /></Button></Grid></sketch:SketchBorder><Popup x:Name="PART_Popup" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_Root}" StaysOpen="False" AllowsTransparency="True" /></Grid></ControlTemplate></Setter.Value></Setter></Style>
+    <Style TargetType="CheckBox">
+        <Setter Property="sketch:SketchMotion.Feedback" Value="True" />
+        <Setter Property="sketch:SketchMotion.Change" Value="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="15" /><Setter Property="Foreground" Value="{StaticResource InkBrush}" /><Setter Property="VerticalContentAlignment" Value="Center" /><Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="CheckBox"><DockPanel LastChildFill="True"><sketch:SketchBorder DockPanel.Dock="Left" Width="19" Height="19" BorderBrush="{StaticResource InkBrush}" BorderThickness="1" CornerRadius="3" Background="#FFFCF4" Margin="0,0,10,0" VerticalAlignment="Center"><Path x:Name="Check" Data="M 3,8 L 7,12 15,3" Stroke="#6D8066" StrokeThickness="2.1" Visibility="Collapsed" StrokeStartLineCap="Round" StrokeEndLineCap="Round" /></sketch:SketchBorder><ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" /></DockPanel><ControlTemplate.Triggers><Trigger Property="IsChecked" Value="True"><Setter TargetName="Check" Property="Visibility" Value="Visible" /></Trigger><Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.4" /></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style TargetType="Slider">
+        <Setter Property="sketch:SketchMotion.Feedback" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" /><Setter Property="MinHeight" Value="25" /><Setter Property="IsMoveToPointEnabled" Value="True" />
+        <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Slider"><Grid VerticalAlignment="Center" Margin="4,0"><Path Data="M 0,2 L 0.3,1 0.65,2 1,0" Stretch="Fill" Stroke="#B4A68F" StrokeThickness="1.2" Height="3" VerticalAlignment="Center" /><Track x:Name="PART_Track" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" Value="{TemplateBinding Value}" IsDirectionReversed="{TemplateBinding IsDirectionReversed}">
+            <Track.DecreaseRepeatButton><RepeatButton Command="Slider.DecreaseLarge" Focusable="False"><RepeatButton.Template><ControlTemplate TargetType="RepeatButton"><Border Background="Transparent" /></ControlTemplate></RepeatButton.Template></RepeatButton></Track.DecreaseRepeatButton>
+            <Track.Thumb><Thumb Width="15" Height="22"><Thumb.Template><ControlTemplate TargetType="Thumb"><Path Data="M 2,3 L 12,1 14,18 3,20 2,3 M 4,4 L 12,3" Fill="{StaticResource MarkerBrush}" Stroke="{StaticResource InkBrush}" StrokeThickness="1.1" StrokeLineJoin="Round" /></ControlTemplate></Thumb.Template></Thumb></Track.Thumb>
+            <Track.IncreaseRepeatButton><RepeatButton Command="Slider.IncreaseLarge" Focusable="False"><RepeatButton.Template><ControlTemplate TargetType="RepeatButton"><Border Background="Transparent" /></ControlTemplate></RepeatButton.Template></RepeatButton></Track.IncreaseRepeatButton>
+        </Track></Grid></ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style TargetType="ItemsControl"><Setter Property="sketch:SketchListMotion.Enabled" Value="True" /></Style>
+    <Style TargetType="ListBox"><Setter Property="sketch:SketchListMotion.Enabled" Value="True" /><Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" /><Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" /><Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" /><Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" /><Setter Property="HorizontalContentAlignment" Value="Stretch" /><Setter Property="Padding" Value="0" /></Style>
+    <Style TargetType="ListBoxItem">
+        <Setter Property="sketch:SketchMotion.Feedback" Value="True" />
+        <Setter Property="sketch:SketchMotion.Change" Value="{Binding IsSelected, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" /><Setter Property="Padding" Value="13" /><Setter Property="Margin" Value="0,0,0,7" /><Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" /><Setter Property="BorderBrush" Value="{StaticResource InkBrush}" /><Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem"><sketch:SketchBorder x:Name="Chrome" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" Padding="{TemplateBinding Padding}"><ContentPresenter /></sketch:SketchBorder><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Chrome" Property="Background" Value="#F5EFD8" /></Trigger><Trigger Property="IsSelected" Value="True"><Setter TargetName="Chrome" Property="Background" Value="{StaticResource MarkerBrush}" /><Setter TargetName="Chrome" Property="BorderThickness" Value="1" /></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+    </Style>
+    <Style TargetType="ProgressBar"><Setter Property="Height" Value="10" /><Setter Property="Background" Value="#F0E6D1" /><Setter Property="Foreground" Value="#C58B72" /><Setter Property="BorderThickness" Value="0" /><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ProgressBar"><Grid x:Name="PART_Track"><sketch:SketchBorder Background="{TemplateBinding Background}" BorderBrush="#B7A58C" BorderThickness="0.8" CornerRadius="4" /><sketch:SketchBorder x:Name="PART_Indicator" HorizontalAlignment="Left" Background="{TemplateBinding Foreground}" BorderBrush="{StaticResource InkBrush}" BorderThickness="0.8" CornerRadius="4" /></Grid></ControlTemplate></Setter.Value></Setter></Style>
+    <Style TargetType="ToolTip"><Setter Property="Foreground" Value="{StaticResource InkBrush}" /><Setter Property="Background" Value="#FFF5CE" /><Setter Property="Padding" Value="13,10" /><Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="14" /><Setter Property="MaxWidth" Value="360" /><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ToolTip"><sketch:SketchBorder Background="{TemplateBinding Background}" BorderBrush="{StaticResource InkBrush}" BorderThickness="1" CornerRadius="8" Padding="{TemplateBinding Padding}"><ContentPresenter /></sketch:SketchBorder></ControlTemplate></Setter.Value></Setter></Style>
+    <Style TargetType="ContextMenu"><Setter Property="Background" Value="#FFFCF4" /><Setter Property="Foreground" Value="{StaticResource InkBrush}" /><Setter Property="FontFamily" Value="{StaticResource HandwritingFont}" /><Setter Property="FontSize" Value="15" /><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ContextMenu"><sketch:SketchBorder Background="{TemplateBinding Background}" BorderBrush="{StaticResource InkBrush}" BorderThickness="1.1" CornerRadius="9" Padding="6"><StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" /></sketch:SketchBorder></ControlTemplate></Setter.Value></Setter></Style>
+    <Style TargetType="MenuItem"><Setter Property="Padding" Value="14,9" /><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="MenuItem"><sketch:SketchBorder x:Name="Chrome" Background="Transparent" BorderThickness="0" CornerRadius="5" Padding="{TemplateBinding Padding}"><ContentPresenter ContentSource="Header" RecognizesAccessKey="True" /></sketch:SketchBorder><ControlTemplate.Triggers><Trigger Property="IsHighlighted" Value="True"><Setter TargetName="Chrome" Property="Background" Value="{StaticResource MarkerBrush}" /></Trigger><Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.4" /></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style>
+</ResourceDictionary>

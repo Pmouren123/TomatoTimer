@@ -1,0 +1,96 @@
+<Window x:Class="TomatoTimerPro.Views.Shell.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sketch="clr-namespace:TomatoTimerPro.Views.Components.Sketch"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="TomatoTimer · 我的专注手帐" Icon="{StaticResource AppIcon}" Width="1160" Height="790" MinWidth="960" MinHeight="680"
+        WindowStyle="None" ResizeMode="CanResize" AllowsTransparency="False"
+        WindowStartupLocation="CenterScreen" Background="{StaticResource CanvasBrush}" Foreground="{StaticResource InkBrush}"
+        FontFamily="{StaticResource HandwritingFont}" UseLayoutRounding="True" TextOptions.TextFormattingMode="Display"
+        FocusManager.FocusedElement="{Binding ElementName=RootLayout}">
+    <shell:WindowChrome.WindowChrome><shell:WindowChrome CaptionHeight="46" ResizeBorderThickness="6" GlassFrameThickness="0" CornerRadius="0" UseAeroCaptionButtons="False" /></shell:WindowChrome.WindowChrome>
+    <Border x:Name="WindowFrame" Background="{StaticResource CanvasBrush}" BorderBrush="#7B6A50" BorderThickness="1" CornerRadius="0" Padding="0">
+      <Grid x:Name="BackgroundLayer" Background="{StaticResource CanvasBrush}" ClipToBounds="True">
+        <Grid.RowDefinitions><RowDefinition Height="46" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+        <Grid Background="#F2E8D4" Margin="2,1,2,0">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="15,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
+                <Image Source="{StaticResource AppIcon}" Width="25" Height="25" Margin="0,0,10,0" />
+                <TextBlock Text="TomatoTimer" FontFamily="Segoe Print" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" />
+                <TextBlock Text=" / 专注手帐" FontFamily="{StaticResource HandwritingFont}" FontSize="16" Foreground="#9A8361" VerticalAlignment="Center" Margin="4,0,0,0" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,8,0">
+                <Button Click="OnMinimizeClick" ToolTip="最小化" shell:WindowChrome.IsHitTestVisibleInChrome="True" Width="37" Height="30" Background="Transparent" BorderThickness="0" Padding="8"><sketch:SketchIcon Kind="minus" Width="17" Height="17" Stroke="#78664B" /></Button>
+                <Button Click="OnMaximizeClick" ToolTip="最大化 / 还原" shell:WindowChrome.IsHitTestVisibleInChrome="True" Width="37" Height="30" Background="Transparent" BorderThickness="0" Padding="8" Margin="2,0">
+                    <sketch:SketchIcon Width="17" Height="17" Stroke="#78664B"><sketch:SketchIcon.Style><Style TargetType="sketch:SketchIcon"><Setter Property="Kind" Value="maximize" /><Style.Triggers><DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized"><Setter Property="Kind" Value="restore" /></DataTrigger></Style.Triggers></Style></sketch:SketchIcon.Style></sketch:SketchIcon>
+                </Button>
+                <Button Click="OnCloseClick" ToolTip="关闭窗口" shell:WindowChrome.IsHitTestVisibleInChrome="True" Width="37" Height="30" Background="#F2D2BD" BorderBrush="#B48A69" BorderThickness="0.8" Padding="8"><sketch:SketchIcon Kind="close" Width="17" Height="17" Stroke="#9D624D" /></Button>
+            </StackPanel>
+            <Path Grid.ColumnSpan="2" Data="M 0,0 L 0.23,0.6 0.52,0 0.77,0.4 1,0" Stretch="Fill" Height="1" Stroke="#B7A68B" StrokeThickness="0.7" VerticalAlignment="Bottom" IsHitTestVisible="False" />
+        </Grid>
+        <sketch:SketchBorder Grid.Row="1" Background="#F5E8BF" BorderBrush="#B99D6D" BorderThickness="1" CornerRadius="7" Padding="13,6" Margin="9,2,9,5">
+            <sketch:SketchBorder.Style><Style TargetType="sketch:SketchBorder"><Setter Property="Visibility" Value="Collapsed" /><Style.Triggers><DataTrigger Binding="{Binding HasActiveTask}" Value="True"><Setter Property="Visibility" Value="Visible" /></DataTrigger><DataTrigger Binding="{Binding CurrentPageId}" Value="timer"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger></Style.Triggers></Style></sketch:SketchBorder.Style>
+            <DockPanel LastChildFill="True">
+                <Button DockPanel.Dock="Right" Content="结束本次" Command="{Binding EndTaskCommand}" Background="#EDC4AC" BorderBrush="#A2815E" BorderThickness="1" Padding="12,5" FontSize="15" Margin="15,0,0,0" />
+                <sketch:SketchIcon DockPanel.Dock="Left" Kind="timer" Width="20" Height="20" Stroke="#9A7950" Margin="0,0,9,0" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding TaskSummary}" FontSize="15" Foreground="#816640" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+            </DockPanel>
+        </sketch:SketchBorder>
+    <Grid x:Name="RootLayout" Grid.Row="2" Focusable="True">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="208" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+        <sketch:SketchBorder Background="{StaticResource SidebarBrush}" BorderBrush="#A8977E" BorderThickness="0,0,1,0" Padding="0">
+            <Grid Margin="16,24,16,22">
+                <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+                <StackPanel Margin="10,0,0,29">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource AppIcon}" Width="40" Height="40" Margin="0,0,8,0" />
+                        <StackPanel VerticalAlignment="Center"><TextBlock Text="Tomato" FontFamily="Segoe Print" FontSize="21" FontWeight="Bold" /><TextBlock Text="我的专注手帐" FontFamily="{StaticResource HandwritingFont}" FontSize="15" Foreground="#92795F" Margin="2,0,0,0" /></StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <Grid Grid.Row="1" x:Name="NavSelectionLayer">
+                    <Canvas IsHitTestVisible="False" Panel.ZIndex="2">
+                        <sketch:SketchBorder x:Name="NavSelectionMarker" Width="5" Height="38" Background="#D97962" BorderBrush="#9D624D" BorderThickness="0.8" CornerRadius="3" Opacity="0" RenderTransformOrigin="0.5,0.5">
+                            <sketch:SketchBorder.RenderTransform><TranslateTransform /></sketch:SketchBorder.RenderTransform>
+                        </sketch:SketchBorder>
+                    </Canvas>
+                    <StackPanel x:Name="NavStack" Panel.ZIndex="1">
+                    <Button x:Name="NavTimerButton" Command="{Binding NavigateTimerCommand}">
+                        <Button.Style><Style TargetType="Button" BasedOn="{StaticResource NavButton}"><Style.Triggers><DataTrigger Binding="{Binding CurrentPageId}" Value="timer"><Setter Property="Background" Value="#EDC4AC" /><Setter Property="BorderThickness" Value="1" /><Setter Property="Foreground" Value="#433B34" /></DataTrigger></Style.Triggers></Style></Button.Style>
+                        <StackPanel Orientation="Horizontal"><sketch:SketchIcon Kind="timer" Width="22" Height="22" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,12,0" /><TextBlock Text="专注计时" FontFamily="{StaticResource HandwritingFont}" FontSize="17" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" VerticalAlignment="Center" /></StackPanel>
+                    </Button>
+                    <Button x:Name="NavCalendarButton" Command="{Binding NavigateCalendarCommand}">
+                        <Button.Style><Style TargetType="Button" BasedOn="{StaticResource NavButton}"><Style.Triggers><DataTrigger Binding="{Binding CurrentPageId}" Value="calendar"><Setter Property="Background" Value="#F2DEA0" /><Setter Property="BorderThickness" Value="1" /><Setter Property="Foreground" Value="#433B34" /></DataTrigger></Style.Triggers></Style></Button.Style>
+                        <StackPanel Orientation="Horizontal"><sketch:SketchIcon Kind="calendar" Width="22" Height="22" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,12,0" /><TextBlock Text="日历与计划" FontFamily="{StaticResource HandwritingFont}" FontSize="17" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" VerticalAlignment="Center" /></StackPanel>
+                    </Button>
+                    <Button x:Name="NavRecordsButton" Command="{Binding NavigateRecordsCommand}">
+                        <Button.Style><Style TargetType="Button" BasedOn="{StaticResource NavButton}"><Style.Triggers><DataTrigger Binding="{Binding CurrentPageId}" Value="records"><Setter Property="Background" Value="#EADBA6" /><Setter Property="BorderThickness" Value="1" /><Setter Property="Foreground" Value="#433B34" /></DataTrigger></Style.Triggers></Style></Button.Style>
+                        <StackPanel Orientation="Horizontal"><sketch:SketchIcon Kind="notes" Width="22" Height="22" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,12,0" /><TextBlock Text="每日日志" FontFamily="{StaticResource HandwritingFont}" FontSize="17" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" VerticalAlignment="Center" /></StackPanel>
+                    </Button>
+                    <Button x:Name="NavMusicButton" Command="{Binding NavigateMusicCommand}">
+                        <Button.Style><Style TargetType="Button" BasedOn="{StaticResource NavButton}"><Style.Triggers><DataTrigger Binding="{Binding CurrentPageId}" Value="music"><Setter Property="Background" Value="#CED9BF" /><Setter Property="BorderThickness" Value="1" /><Setter Property="Foreground" Value="#433B34" /></DataTrigger></Style.Triggers></Style></Button.Style>
+                        <StackPanel Orientation="Horizontal"><sketch:SketchIcon Kind="music" Width="22" Height="22" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,12,0" /><TextBlock Text="音乐与铃声" FontFamily="{StaticResource HandwritingFont}" FontSize="17" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" VerticalAlignment="Center" /></StackPanel>
+                    </Button>
+                    <Path Data="M 0,1 L 32,0 71,2 113,0 145,1" Stroke="#B7A68B" StrokeThickness="0.8" Margin="15,12,15,20" />
+                    <Button x:Name="NavSettingsButton" Command="{Binding NavigateSettingsCommand}">
+                        <Button.Style><Style TargetType="Button" BasedOn="{StaticResource NavButton}"><Style.Triggers><DataTrigger Binding="{Binding CurrentPageId}" Value="settings"><Setter Property="Background" Value="#E2D3BD" /><Setter Property="BorderThickness" Value="1" /><Setter Property="Foreground" Value="#433B34" /></DataTrigger></Style.Triggers></Style></Button.Style>
+                        <StackPanel Orientation="Horizontal"><sketch:SketchIcon Kind="settings" Width="22" Height="22" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,12,0" /><TextBlock Text="偏好设置" FontFamily="{StaticResource HandwritingFont}" FontSize="17" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" VerticalAlignment="Center" /></StackPanel>
+                    </Button>
+                    </StackPanel>
+                </Grid>
+                <Button Grid.Row="3" Command="{Binding SelectWorkspaceCommand}" Style="{StaticResource TextButton}" Padding="0" HorizontalContentAlignment="Stretch" ToolTip="切换工作区" AutomationProperties.Name="切换工作区">
+                    <sketch:SketchBorder Background="#F8EFCF" BorderBrush="#A38D6A" BorderThickness="1" CornerRadius="7" Padding="13">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal"><sketch:SketchIcon Kind="folder" Width="15" Height="15" Stroke="#8D775B" Margin="0,0,6,0" /><TextBlock Text="当前工作区" Foreground="#947E5E" FontSize="12" VerticalAlignment="Center" /></StackPanel>
+                            <TextBlock Text="{Binding WorkspaceName, TargetNullValue=尚未选择工作区}" Foreground="#5D503F" FontSize="14" TextTrimming="CharacterEllipsis" ToolTip="{Binding WorkspaceName}" Margin="0,9,0,0" />
+                        </StackPanel>
+                    </sketch:SketchBorder>
+                </Button>
+            </Grid>
+        </sketch:SketchBorder>
+        <Grid Grid.Column="1" Background="{StaticResource NotebookLines}">
+            <sketch:AnimatedPageHost Content="{Binding CurrentPage}" TransitionMilliseconds="{Binding Animation.PageTransitionMilliseconds}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+        </Grid>
+    </Grid>
+      </Grid>
+    </Border>
+</Window>

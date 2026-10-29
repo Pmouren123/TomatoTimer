@@ -1,0 +1,155 @@
+{
+    "library":  "Oreo Doodle Icons",
+    "author":  "Nicole Tang",
+    "officialRepository":  "https://github.com/oreo-design/doodle-icons",
+    "officialWebsite":  "https://doodle.oreoui.com",
+    "license":  "MIT",
+    "copyright":  "Copyright (c) 2026 Nicole Tang",
+    "licenseUrl":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/LICENSE",
+    "revision":  "e88c89a346aa3883a3656da6cfbe3cc8adcc9876",
+    "downloadedAtUtc":  "2026-10-29T07:42:15.3209115Z",
+    "originalStrokeWidth":  3.4,
+    "adaptation":  "Static SVG path data copied without shape modification into WPF GeometryGroup resources. SVG animations are intentionally not used. Resource keys map to application meanings; see each originalName.",
+    "icons":  [
+                  {
+                      "resourceKey":  "Doodle.timer",
+                      "originalName":  "gauge",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/gauge.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/gauge.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.notes",
+                      "originalName":  "book-open",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/book-open.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/book-open.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.music",
+                      "originalName":  "player",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/player.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/player.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.settings",
+                      "originalName":  "gear",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/gear.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/gear.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.play",
+                      "originalName":  "play",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/play.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/play.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.folder",
+                      "originalName":  "folder-open",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/folder-open.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/folder-open.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.close",
+                      "originalName":  "close",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/close.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/close.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.volume",
+                      "originalName":  "megaphone",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/megaphone.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/megaphone.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.pin",
+                      "originalName":  "pin",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/pin.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/pin.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.save",
+                      "originalName":  "save",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/save.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/save.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.bell",
+                      "originalName":  "bell",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/bell.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/bell.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.image",
+                      "originalName":  "image",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/image.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/image.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.pen",
+                      "originalName":  "pen",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/pen.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/pen.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.check",
+                      "originalName":  "check",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/check.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/check.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.plus",
+                      "originalName":  "plus",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/plus.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/plus.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.minus",
+                      "originalName":  "minus",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/minus.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/minus.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.home",
+                      "originalName":  "home",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/home.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/home.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.trash",
+                      "originalName":  "trash",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/trash.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/trash.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.previous",
+                      "originalName":  "arrow-left",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/arrow-left.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/arrow-left.svg"
+                  },
+                  {
+                      "resourceKey":  "Doodle.next",
+                      "originalName":  "arrow-right",
+                      "url":  "https://raw.githubusercontent.com/oreo-design/doodle-icons/e88c89a346aa3883a3656da6cfbe3cc8adcc9876/icons/arrow-right.svg",
+                      "viewBox":  "0 0 48 48",
+                      "originalFile":  "Svg/arrow-right.svg"
+                  }
+              ]
+}
